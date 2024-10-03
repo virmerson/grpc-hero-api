@@ -1,5 +1,5 @@
-import { Controller, Get, Inject, OnModuleInit, Param } from '@nestjs/common';
-import { Hero, HERO_PACKAGE_NAME, HERO_SERVICE_NAME, HeroServiceClient, HeroServiceControllerMethods } from '../proto/interfaces/hero';
+import { Controller, Get, Inject, Logger, OnModuleInit, Param } from '@nestjs/common';
+import { Hero, HERO_PACKAGE_NAME, HERO_SERVICE_NAME, HeroServiceClient } from 'hero-proto-definition/hero';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 
@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Controller('hero')
 
 export class HeroController implements OnModuleInit {
-
+   private readonly logger = new Logger('HeroController')
    
     private heroService:HeroServiceClient
 
@@ -15,17 +15,13 @@ export class HeroController implements OnModuleInit {
 
     onModuleInit() {
         this.heroService = this.client.getService<HeroServiceClient>(HERO_SERVICE_NAME)
-        /*
-        HERO_SERVICE_NAME needs to match with the name of the service in the proto file 
-        service HeroService {
-            rpc FindOne(HeroById) returns (Hero) {}
-        }
-         */
     }
+
  
-    
+
     @Get(':id')
     getById(@Param('id') id:string):Observable<Hero>{
+        this.logger.log(`Fetching hero with id ${id}`)
         return this.heroService.findOne({id: +id});
     }
 }
