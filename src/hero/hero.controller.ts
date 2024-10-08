@@ -1,8 +1,8 @@
-import { Controller, Get, Inject, Logger, OnModuleInit, Param } from '@nestjs/common';
+import { Controller, Get, Inject, Logger, OnModuleInit, Param, UseGuards } from '@nestjs/common';
 import { Hero, HERO_PACKAGE_NAME, HERO_SERVICE_NAME, HeroServiceClient } from 'hero-proto-definition/hero';
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
-
+//import { jwtAuthGuard } from 'common-hero-package';
 
 @Controller('hero')
 
@@ -18,7 +18,7 @@ export class HeroController implements OnModuleInit {
     }
 
  
-
+   // @UseGuards(jwtAuthGuard)
     @Get(':id')
     getById(@Param('id') id:string):Observable<Hero>{
         this.logger.log(`Fetching hero with id ${id}`)
