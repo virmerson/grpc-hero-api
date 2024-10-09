@@ -26,7 +26,7 @@ import { AUTH_SERVICE } from 'common-hero-package';
                 useFactory: (configService: ConfigService) => ({
                     transport: Transport.TCP,
                     options: {
-                        host: configService.get('AUTH_HOST'), //Is it localhost o 0.0.0.0?
+                        host: configService.get('AUTH_HOST'), 
                         port: configService.get('AUTH_PORT'),
                     },
                 }),

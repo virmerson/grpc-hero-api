@@ -9,8 +9,8 @@ async function bootstrap() {
   const configService = app.get(ConfigService)
   //app.useGlobalPipes(new ValidationPipe());
   //app.useLogger(app.get(Logger));
-  await app.listen(configService.get('PORT'));
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  await app.listen(configService.get('HTTP_PORT'));
+  console.log(`Hero API is running on: ${await app.getUrl()}`);
 
 }
 bootstrap();
