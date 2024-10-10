@@ -4,6 +4,7 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { CurrentUser, JwtAuthGuard, UserDto } from 'common-hero-package';
 
+
 @Controller('hero')
 
 export class HeroController implements OnModuleInit {
@@ -17,11 +18,11 @@ export class HeroController implements OnModuleInit {
         this.heroService = this.client.getService<HeroServiceClient>(HERO_SERVICE_NAME)
     }
 
-    @UseGuards(JwtAuthGuard)  //TODO: It will need to talk to the auth service to validate the token
+    @UseGuards(JwtAuthGuard) 
     @Get(':id')
-    getById(@Param('id') id:string, @CurrentUser() user:UserDto):Observable<Hero>{
+    getById(@Param('id') id:string , @CurrentUser() user:UserDto):Observable<Hero>{
         this.logger.log(`Fetching hero with id ${id}`)
-        this.logger.log(`user Authenticated ${user}`)
+        this.logger.log(`User Authenticated ${JSON.stringify(user)}`)
         const hero=   this.heroService.findOne({id: +id});
         return hero
     }
