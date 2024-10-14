@@ -22,10 +22,15 @@ export class GrpcMetadataInterceptor implements NestInterceptor {
       metadata.add('user-email', user.email);
     }
 
-      
+    //for the annotation @GrpcMethodMetadata
     const request = context.switchToHttp().getRequest();
     request.metadata = metadata;
 
+     // Log metadata before sending the request
+     console.log('Client Metadata:', metadata.getMap());
+     
+     console.log('Equals metadata', call.metadata === metadata);
+     
     return next.handle().pipe(
       tap(() => {
         // here we can do something after the response is sent
