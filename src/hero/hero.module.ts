@@ -1,4 +1,4 @@
-import { Logger, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { grpcClientOptions } from '../grpc-client-options';
 import { HeroController } from './hero.controller';
@@ -6,7 +6,6 @@ import { HERO_PACKAGE_NAME } from 'hero-proto-definition/hero';
 import { HeroService } from './hero.service';
 import { ConfigService } from '@nestjs/config';
 import { AUTH_SERVICE } from 'common-hero-package';
-import { InterceptingCall, Metadata } from '@grpc/grpc-js';
 
 
 

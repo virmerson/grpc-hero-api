@@ -4,7 +4,7 @@ import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { CurrentUser, JwtAuthGuard, UserDto } from 'common-hero-package';
 import { GrpcMetadataInterceptor } from 'src/interceptors/grpc-metada.interceptor';
-import { Metadata } from '@grpc/grpc-js';
+import { Metadata } from "@grpc/grpc-js";
 import { GrpcMetadata } from 'src/decorator/grpc-metadata.decorator';
 
 
@@ -15,7 +15,10 @@ export class HeroController implements OnModuleInit {
    
     private heroService:HeroServiceClient
 
-    constructor (@Inject(HERO_PACKAGE_NAME) private readonly client:ClientGrpc){}
+    constructor (@Inject(HERO_PACKAGE_NAME) private readonly client:ClientGrpc){
+
+        this.logger.log('Client created '+ client )
+    }
 
     onModuleInit() {
         this.heroService = this.client.getService<HeroServiceClient>(HERO_SERVICE_NAME)
@@ -34,7 +37,7 @@ export class HeroController implements OnModuleInit {
       
         this.logger.log(`User in metadata ${JSON.stringify(metadata.getMap())}`)
 
-        const hero=   this.heroService.findOne({id: +id});
+        const hero=   this.heroService.findOne({id: +id}, metadata );
         return hero
     }
 }
