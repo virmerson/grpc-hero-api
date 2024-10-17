@@ -1,12 +1,14 @@
-version: '3.8'
-
 services:
-  mongo:
-    image: mongo:latest
+  mysql:
+    image: mysql:8.0
     ports:
-      - "27017:27017"
+      - "3306:3306"
+    environment:
+      MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+      MYSQL_DATABASE: "herodb"
+      
     volumes:
-      - mongo-data:/data/db
+      - ./mysql:/var/lib/mysql
 
-volumes:
-  mongo-data:
+
+    
